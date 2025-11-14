@@ -1,0 +1,4 @@
+##### XXXX Project
+##### Procedure Notes
+##### A file for internal project notes about the procedure
+##### First created XXXX
