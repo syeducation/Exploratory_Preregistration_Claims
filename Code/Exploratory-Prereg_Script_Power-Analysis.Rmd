@@ -1,0 +1,277 @@
+---
+title: "Evaluating Claims that Registration Restricts Exploratory Research"
+author: "Moin Syed"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(groundhog)
+groundhog.library(pwr, "2025-04-01")
+
+```
+
+# Power Analysis
+
+We can use O'Mahony (2023) as a starting point for the power analysis. No effect size is reported, but we can calculate it using two methods. The first method is based on the reported test statistic:
+
+```{r power 1, echo=FALSE}
+
+#### Power Analysis ####
+
+# calculate effect size (phi) from O'Mahony (2023)
+# based on x2(1, N = 510) = 16.19, p < 0.001
+
+es_0 <- sqrt(16.19/510)
+
+# 0.1781715
+# insert this value into the power calculator
+
+pwr.chisq.test(w = es_0, power = 0.8, df = 2, sig.level = 0.05)
+
+es_0_n <- pwr.chisq.test(w = es_0, power = 0.8, df = 2, sig.level = 0.05)$N
+
+# N = 303.5016
+
+```
+
+This yields a value of w = `r round(es_0, digits = 3)`, which would require a sample of `r round(es_0_n)`. An alternative approach is to use the reported frequencies to reconstruct the 2x2 contingency table, and use that as the input:
+
+```{r power 2, echo=FALSE}
+
+# alternative method:
+# use same proprtions observed in O'Mahony to run power analysis
+
+SR_N_freq <- .29
+SR_Y_freq <- .38
+RR_N_freq <- .08
+RR_Y_freq <- .25
+      
+prob <- matrix(c(SR_N_freq, RR_N_freq, SR_Y_freq, RR_Y_freq), ncol=2,
+               dimnames = list(c("SR","R"), c("No","Yes")))
+prob
+
+es_1 <-  ES.w2(prob)
+
+# w = 0.1854456, a bit higher based on parameters
+
+pwr.chisq.test(w = es_1, power = 0.8, df = 2, sig.level = 0.05)
+
+es_1_n <- pwr.chisq.test(w = es_1, power = 0.8, df = 2, sig.level = 0.05)$N
+
+# N = 280.159
+
+```
+
+This yields a value of w = `r round(es_1, digits = 3)`, which is similar but just a little bit larger. In this case, a sample size of `r round(es_1_n)` would be required.
+
+O'Mahony's (2023) study included twice as many traditional reports as Registered Reports. Next we examine what happens if we make the two equal, but preserve the same relative frequencies: 
+
+```{r power 3, echo=FALSE}
+
+# new power analyses based on our plans
+# will be equal numbers RR and SR
+# O'Mahony had twice as much SR than RR
+
+SR_N_freq <- .21
+SR_Y_freq <- .29
+RR_N_freq <- .12
+RR_Y_freq <- .38
+
+prob <- matrix(c(SR_N_freq, RR_N_freq, SR_Y_freq, RR_Y_freq), ncol=2,
+               dimnames = list(c("SR","R"), c("No","Yes")))
+prob
+
+es_2 <-  ES.w2(prob)
+
+# w = 0.1914027
+
+pwr.chisq.test(w = es_2, power = 0.8, df = 2, sig.level = 0.05)
+
+es_2_n <- pwr.chisq.test(w = es_2, power = 0.8, df = 2, sig.level = 0.05)$N
+
+# N = 262.9913
+
+```
+
+Doing this results in an effect size of w = `r round(es_2, digits = 3)` and a necessary sample size of `r round(es_2_n)`.
+
+All of the preceding are 2x2 contingency tables, and thus would assume that we would collapse the two categories of registration (Registered Reports and preregistered studies) and the two categories of traditional articles (companion articles and 2010 articles). If, instead, we separated the four articles types for analysis, there are a variety of relevant scenarios worth probing with respect to their impact on the required sample size. 
+
+In Scenario 1, we assume equal frequencies within the two categoroies (registered and not), at the same rate as found in O'Mahony (2023):
+
+```{r power 4, echo=FALSE}
+
+# the above is 2x2, and so combines the Rs and SR types
+# what is separate? some different scenarios
+
+###########
+
+# scenario 1: equal freqs within category, same rate as O'Mahony
+
+SR_N_freq <- .11
+SR_Y_freq <- .14
+SO_N_freq <- .11
+SO_Y_freq <- .14
+RR_N_freq <- .06
+RR_Y_freq <- .19
+PR_N_freq <- .06
+PR_Y_freq <- .19
+
+prob <- matrix(c(SR_N_freq,SR_Y_freq,SO_N_freq,SO_Y_freq,
+                 RR_N_freq,RR_Y_freq,PR_N_freq,PR_Y_freq), ncol=4,
+               dimnames = list(c("No","Yes"),
+                               c("SR","SO","RR","PR")))
+prob  
+
+es_3 <- ES.w2(prob)
+
+# w = 0.2111002
+
+pwr.chisq.test(w = es_3, power = 0.8, df = 2, sig.level = 0.05)
+
+es_3_n <- pwr.chisq.test(w = es_3, power = 0.8, df = 2, sig.level = 0.05)$N
+
+# N = 216.2024
+
+```
+
+This indicates an effect size of w = `r round(es_3, digits = 3)` and sample size of `r round(es_3_n)`.
+
+Scenario 2 examines what would happen in the rate of exploratory research in preregistered studies was the same as for standard reports:
+
+```{r power 5, echo=FALSE}
+
+# scenario 2: rate of PR similar to standard reports
+
+SR_N_freq <- .11
+SR_Y_freq <- .14
+SO_N_freq <- .11
+SO_Y_freq <- .14
+RR_N_freq <- .06
+RR_Y_freq <- .19
+PR_N_freq <- .11
+PR_Y_freq <- .14
+
+prob <- matrix(c(SR_N_freq,SR_Y_freq,SO_N_freq,SO_Y_freq,
+                 RR_N_freq,RR_Y_freq,PR_N_freq,PR_Y_freq), ncol=4,
+               dimnames = list(c("No","Yes"),
+                               c("SR","SO","RR","PR")))
+prob  
+
+es_4 <- ES.w2(prob)
+
+# w = 0.1775552
+
+pwr.chisq.test(w = es_4, power = 0.8, df = 2, sig.level = 0.05)
+
+es_4_n <- pwr.chisq.test(w = es_4, power = 0.8, df = 2, sig.level = 0.05)$N
+
+# N = 305.6123
+
+```
+
+This indicates an effect size of w = `r round(es_4, digits = 3)` and sample size of `r round(es_4_n)`.
+
+Scenario 3 examines if the rate of exploratory research is higher in the matched sample of traditional articles compared with the 2010 non-registered articles, while keeping the rate the same for preregistered studies and Registered Reports.
+
+```{r power 6, echo=FALSE}
+
+# scenario 3: rate of newer SRs higher than old SRs
+
+SR_N_freq <- .11
+SR_Y_freq <- .14
+SO_N_freq <- .14
+SO_Y_freq <- .11
+RR_N_freq <- .06
+RR_Y_freq <- .19
+PR_N_freq <- .06
+PR_Y_freq <- .19
+
+prob <- matrix(c(SR_N_freq,SR_Y_freq,SO_N_freq,SO_Y_freq,
+                 RR_N_freq,RR_Y_freq,PR_N_freq,PR_Y_freq), ncol=4,
+               dimnames = list(c("No","Yes"),
+                               c("SR","SO","RR","PR")))
+prob  
+
+es_5 <- ES.w2(prob)
+
+# w = 0.2832368
+
+pwr.chisq.test(w = es_5, power = 0.8, df = 2, sig.level = 0.05)
+
+es_5_n <- pwr.chisq.test(w = es_5, power = 0.8, df = 2, sig.level = 0.05)$N
+
+# N = 120.0987
+
+```
+
+This indicates an effect size of w = `r round(es_5, digits = 3)` and sample size of `r round(es_5_n)`.
+
+Finally, Scenario 4 combines the two previous changes into a single model:
+
+```{r power 7, echo=FALSE}
+
+# scenario 4: combine both of previous
+
+SR_N_freq <- .11
+SR_Y_freq <- .14
+SO_N_freq <- .14
+SO_Y_freq <- .11
+RR_N_freq <- .06
+RR_Y_freq <- .19
+PR_N_freq <- .11
+PR_Y_freq <- .14
+
+prob <- matrix(c(SR_N_freq,SR_Y_freq,SO_N_freq,SO_Y_freq,
+                 RR_N_freq,RR_Y_freq,PR_N_freq,PR_Y_freq), ncol=4,
+               dimnames = list(c("No","Yes"),
+                               c("SR","SO","RR","PR")))
+prob  
+
+es_6 <- ES.w2(prob)
+
+# w = 0.2327814
+
+pwr.chisq.test(w = es_6, power = 0.8, df = 2, sig.level = 0.05)
+
+es_6_n <- pwr.chisq.test(w = es_6, power = 0.8, df = 2, sig.level = 0.05)$N
+
+# N = 177.8038
+```
+
+This indicates an effect size of w = `r round(es_6, digits = 3)` and sample size of `r round(es_6_n)`.
+
+```{r power summary, echo=FALSE}
+
+# gather all of the estimates together to find min and max
+
+es_all <- c(es_0, es_1, es_2, es_3, es_4, es_5, es_6)
+es_n_all <- c(es_0_n, es_1_n, es_2_n, es_3_n, es_4_n, es_5_n, es_6_n)
+
+# save min and max as objects
+
+es_min <- min(es_all)
+es_max <- max(es_all)
+
+es_n_min <- min(es_n_all)
+es_n_max <- max(es_n_all)
+
+```
+
+Taken together, this set of analyses suggests a range of effect sizes of, w = `r round(es_min, digits = 3)`-`r round(es_max, digits = 3)`, and a range of sample sizes of, *N* = `r round(es_n_min)`-`r round(es_n_max)`. We thus opted for a total sample size of 300 articles. 
+
+The following summary text will be inserted into the manuscript:
+
+Full details of the power analysis are available at https://osf.io/4vbtq/; here, we provide a summary. The arguments made in the literature that registration will restrict exploratory research has often used extreme language such as that it will “put researchers in chains” (Scott, 2013), “stifle discovery” (Goldin-Meadow, 2016) and serves as a “stranglehold” on research (McDermott, 2022). The severity of this language clearly implies a large effect, that we would see a dramatically lower rate of exploratory work in registered compared to non-registered studies. The only available evidence, however, indicates a moderate difference in the other direction, with a greater prevalence of exploratory research in Registered Reports compared with standard reports (O’Mahony, 2023). The effect size in O’Mahony (2023) is not reported, but we can use the reported test statistic, ꭕ2(1, N = 510) = 16.19, p < 0.001, to calculate it as ɸ =.18. This corresponded to an approximate difference in prevalence of 20%. 
+
+It is difficult to say what effect size is the smallest that would be meaningful. Our goal in this project, however, is to address the extreme claims about the damaging impact of registration. Thus, absent any evidence, we would thus primarily be interested in large effects. O’Mahony, 2023 provides evidence of a moderate effect, albeit in the other direction. That this effect was found in a registered thesis using a large sample of articles suggests that there is low risk of bias. Thus, we used  ɸ =.18 as our estimate for the present study. The pwr.chisq.test function from the pwr package in R (Champely et al., 2020) indicated a necessary total sample size of 297.37 for a 2x2 contingency table (registered vs. not registered), with alpha = .05 and power = .80. That assumes that we are collapsing the two registered articles types together and two traditional articles types together and comparing them against each other. If, instead, we compared all four articles types, but assumed that the pattern of exploratory research would be the same across the two broad categories, then that would yield an effect size of Cramer’s V = .21 and a suggested sample size of 218.47. Relaxing these assumptions in different ways leads to a range of effect sizes from Cramer’s V =.19-21. Taken together, the power analysis indicates a total sample of 300 articles will be sufficient for the aims of the study. 
+
+
+
+
+
+
+
