@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.9)  23 NOV 2025 19:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.23)  29 NOV 2025 10:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Exploratory-Prereg_Script_Power-Analysis.tex
 (./Exploratory-Prereg_Script_Power-Analysis.tex
 LaTeX2e <2025-11-01>
-L3 programming layer <2025-10-24>
+L3 programming layer <2025-11-06>
 (c:/Users/moin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
 (c:/Users/moin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
@@ -423,8 +423,8 @@ You may provide a definition with
  
 Here is how much of TeX's memory you used:
  10991 strings out of 469476
- 169206 string characters out of 5467017
- 588224 words of memory out of 5000000
+ 169206 string characters out of 5467016
+ 588239 words of memory out of 5000000
  39489 multiletter control sequences out of 15000+600000
  672358 words of font info for 79 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191

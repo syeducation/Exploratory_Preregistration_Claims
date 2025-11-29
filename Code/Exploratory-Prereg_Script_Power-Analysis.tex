@@ -67,7 +67,7 @@
 \title{Evaluating Claims that Registration Restricts Exploratory
 Research}
 \author{Moin Syed}
-\date{2025-11-23}
+\date{2025-11-29}
 
 \begin{document}
 \maketitle
@@ -269,29 +269,29 @@ direction, with a greater prevalence of exploratory research in
 Registered Reports compared with standard reports (O'Mahony, 2023). The
 effect size in O'Mahony (2023) is not reported, but we can use the
 reported test statistic, ꭕ2(1, N = 510) = 16.19, p \textless{} 0.001, to
-calculate it as ɸ =.18. This corresponded to an approximate difference
+calculate it as ɸ = 0.18. This corresponded to an approximate difference
 in prevalence of 20\%.
 
 It is difficult to say what effect size is the smallest that would be
 meaningful. Our goal in this project, however, is to address the extreme
 claims about the damaging impact of registration. Thus, absent any
 evidence, we would thus primarily be interested in large effects.
-O'Mahony, 2023 provides evidence of a moderate effect, albeit in the
+O'Mahony (2023) provides evidence of a moderate effect, albeit in the
 other direction. That this effect was found in a registered thesis using
 a large sample of articles suggests that there is low risk of bias.
-Thus, we used ɸ =.18 as our estimate for the present study. The
+Thus, we used ɸ = 0.18 as our estimate for the present study. The
 pwr.chisq.test function from the pwr package in R (Champely et al.,
-2020) indicated a necessary total sample size of 297.37 for a 2x2
+2020) indicated a necessary total sample size of 304 for a 2x2
 contingency table (registered vs.~not registered), with alpha = .05 and
 power = .80. That assumes that we are collapsing the two registered
 articles types together and two traditional articles types together and
 comparing them against each other. If, instead, we compared all four
 articles types, but assumed that the pattern of exploratory research
 would be the same across the two broad categories, then that would yield
-an effect size of Cramer's V = .21 and a suggested sample size of
-218.47. Relaxing these assumptions in different ways leads to a range of
-effect sizes from Cramer's V =.19-21. Taken together, the power analysis
-indicates a total sample of 300 articles will be sufficient for the aims
-of the study.
+an effect size of Cramer's V = 0.21 and a suggested sample size of 216.
+Relaxing these assumptions in different ways leads to a range of effect
+sizes from Cramer's V = 0.18-0.28 and a range of sample sizes from
+\emph{N} = 120-306. Taken together, the power analysis indicates a total
+sample of 300 articles will be sufficient for the aims of the study.
 
 \end{document}
