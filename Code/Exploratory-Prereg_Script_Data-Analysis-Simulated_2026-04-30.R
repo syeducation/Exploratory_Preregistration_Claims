@@ -29,7 +29,7 @@ set.seed(1978)
 
 ## registered reports
 
-# create is and joural index
+# create id and joural index
 
 dat_rr <- data.frame(id = c(1:100), type = "RR")
 head(dat_rr)
