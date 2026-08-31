@@ -1,0 +1,48 @@
+id,journal name,included,guidance specified for traditional articles?,guidance specified for preregistered articles? ,guidance specified for RRs? ,notes
+101,Acta Psychologica,0,no guidance,no guidance,no guidance,
+102,Advances in Methods and Practices in Psychological Science,0,no guidance,required,required,
+103,Analyses of Social Issues and Public Policy,0,no guidance,no guidance,no guidance,
+104,Applied Cognitive Psychology,0,no guidance,no guidance,required,
+105,"Attention, Perception, and Psychophysics",1,required,required,required,
+106,British Journal of Educational Psychology,1,no guidance,no guidance,required,
+107,British Journal of Health Psychology,1,no guidance,no guidance,required,
+108,British Journal of Psychology,1,no guidance,no guidance,required,
+109,British Journal of Social Psychology,1,no guidance,no guidance,required,
+110,Cognition and Emotion,1,no guidance,no guidance,required,
+111,Cognitive Research: Principles and Implications,1,no guidance,no guidance,required,
+112,Collabra: Psychology,1,no guidance,no guidance,required,
+113,Consciousness and Cognition,1,no guidance,no guidance,no guidance,
+114,Cortex,1,no guidance,no guidance,required,
+115,Developmental Cognitive Neuroscience,0,no guidance,no guidance,no guidance,
+116,Developmental Science,1,no guidance,no guidance,no guidance,
+117,Discourse Processes,0,no guidance,no guidance,no guidance,
+118,Emerging Adulthood,0,required,required,required,"registered reports are not mentioned; implied that all articles (i.e., regardless of article type) must distinguish between exploratory and confirmatory analyses"
+119,European Journal of Personality,1,no guidance,required,required,
+120,European Journal of Psychotraumatology,0,no guidance,no guidance,required,
+121,Evolution and Human Behavior,1,no guidance,no guidance,no guidance,"author guidelines say, ""click here for more details"" in the Registered Reports section, but there is nothing hyperlinked at the ""here"""
+122,Experimental Psychology,1,no guidance,no guidance,required,
+123,Frontiers in Psychology,0,no guidance,no guidance,no guidance,registered reports are not mentioned
+124,Infant and Child Development,1,no guidance,no guidance,no guidance,
+125,International Journal of Eating Disorders,0,no guidance,no guidance,no guidance,registered reports are not mentioned
+126,International Journal of Psychophysiology,1,no guidance,no guidance,no guidance,
+127,i-Perception,0,no guidance,no guidance,required,
+128,Journal of Cognitive Psychology,0,no guidance,no guidance,required,
+129,Journal of Experimental Social Psychology,1,no guidance,no guidance,required,
+130,Journal of Neuropsychology,0,no guidance,no guidance,required,
+131,Journal of Personality and Social Psychology,1,no guidance,no guidance,no guidance,
+132,Journal of Research in Personality,1,no guidance,no guidance,required,
+133,Journal of the American Academy of Child and Adolescent Psychiatry,0,required,required,required,"implied that all articles (i.e., regardless of article type) must distinguish between exploratory and confirmatory analyses"
+134,Judgment and Decision Making,1,no guidance,no guidance,no guidance,
+135,Law and Human Behavior,1,no guidance,required,required,
+136,Legal and Criminological Psychology,1,no guidance,no guidance,required,
+137,Memory,1,no guidance,no guidance,required,
+138,Nature Human Behaviour,1,no guidance,no guidance,required,
+139,Neuroscience of Consciousness,0,no guidance,no guidance,required,
+140,Psychological Science,0,no guidance,no guidance,required,
+141,Psychology & Health,1,no guidance,required,required,required to distinguish between exploratory and confirmatory analyses in order to earn badge for preregistration
+142,Psychology of Addictive Behaviors,1,no guidance,required,required,required to distinguish between exploratory and confirmatory analyses in order to earn badge for preregistration
+143,Psychology of Sport and Exercise,1,no guidance,no guidance,no guidance,
+144,Psychonomic Bulletin & Review,1,required,required,required,
+145,Psychophysiology,1,no guidance,no guidance,encouraged,encouraged in an editorial about registered reports for that journal
+146,Quarterly Journal of Experimental Psychology,1,no guidance,no guidance,no guidance,"""here"" link for more guidance on RRs is broken"
+147,Stress and Health,0,no guidance,no guidance,required,
