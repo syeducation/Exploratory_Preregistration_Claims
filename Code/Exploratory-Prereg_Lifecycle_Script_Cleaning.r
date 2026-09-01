@@ -7,7 +7,6 @@
 
 #### Workspace setup ####
 
-
 library(dplyr)
 library(tidyr)
 library(summarytools) # if using mac, requires install of xquartz (easy)
@@ -28,7 +27,7 @@ set.seed(1978)
 #############################################
 #### Data import ####
 
-dat_new <- read.csv("../Data/Exploratory-Prereg_Lifecycle_RR-New-List.csv")
+dat_new <- read.csv("./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR-New-List.csv")
 names(dat_new)
 
 # add variable "source"
@@ -37,7 +36,7 @@ dat_new <- dat_new %>% mutate(source = "new")
 names(dat_new)
 head(dat_new)
 
-dat_liu <- read.csv("../Data/Exploratory-Prereg_Lifecycle_RR_Liu_Full-List.csv")
+dat_liu <- read.csv("./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Liu_Full-List.csv")
 names(dat_liu)
 
 # add variable "source"
@@ -100,7 +99,7 @@ names(dat_final)
 dat_final <- dat_final[,c(1, 9, 2:8)]
 names(dat_final)
 
-# write.csv(dat_final, "Exploratory-Prereg_Lifecycle_RR_Data.csv", row.names = FALSE)
+# write.csv(dat_final, "./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Data.csv", row.names = FALSE)
 
 # random sampling was supposed to be reproducible
 # looks like something got messed up and the random sampling is not reproducible!
@@ -112,7 +111,7 @@ names(dat_final)
 
 # reading back in the data file so that I can resample from those not included
 
-dat_first_run <- read.csv("Exploratory-Prereg_Lifecycle_RR_Data.csv")
+dat_first_run <- read.csv("./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Data.csv")
 head(dat_first_run)
 
 # add a constant indicating that these were included in first run
@@ -158,15 +157,15 @@ dat_extra <- dat_extra[,c(1, 9, 2:8, 10)]
 names(dat_extra)
 
 # not writing this out because it may not be reproducible
-# instead reas in resultant file in next section
-# write.csv(dat_extra, "Exploratory-Prereg_Lifecycle_RR_Selection-2_Data.csv", row.names = FALSE)
+# instead read in resultant file in next section
+# write.csv(dat_extra, "./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Selection-2_Data.csv", row.names = FALSE)
 
 #############################################
 #### Reliability ####
 
 # reading in final article set and selecting set for reliability coding
 
-dat_zot <- read.csv("../Data/Exploratory-Prereg_Lifecycle_RR_Zotero-Export_2026-07-17.csv")
+dat_zot <- read.csv("./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Zotero-Export_2026-07-17.csv")
 names(dat_zot)
 
 dat_zot <- dat_zot[,c(1, 3:6, 9, 10, 23, 40)]
@@ -203,7 +202,7 @@ names(dat_reliability)
 head(dat_reliability)
 
 # again, not writing out because of uncertainities of reproducibility 
-# write.csv(dat_reliability, "Exploratory-Prereg_Lifecycle_RR_Reliability.csv", row.names = FALSE)
+# write.csv(dat_reliability, "./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Reliability.csv", row.names = FALSE)
 
 #############################################
 #### Coding ####
@@ -227,7 +226,7 @@ names(dat_coding)
 
 dat_coding <- dat_coding %>% arrange(Key)
 
-# write.csv(dat_coding, "Exploratory-Prereg_Lifecycle_RR_Coding.csv", row.names = FALSE)
+# write.csv(dat_coding, "./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Coding.csv", row.names = FALSE)
 
 ###########################################
 
@@ -237,12 +236,12 @@ dat_coding <- dat_coding %>% arrange(Key)
 
 # first the original Zotero export
 
-dat_z1 <- read.csv("Exploratory-Prereg_Lifecycle_RR_Zotero-Export_2026-07-17.csv")
+dat_z1 <- read.csv("./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Zotero-Export_2026-07-17.csv")
 names(dat_z1)
 
 # now the update
 
-dat_z2 <- read.csv("Exploratory-Prereg_Lifecycle_RR_Zotero-Export_2026-08-04.csv")
+dat_z2 <- read.csv("./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Zotero-Export_2026-08-04.csv")
 names(dat_z2)
 
 # merge together
@@ -251,10 +250,6 @@ dat_z_merge <- rbind(dat_z1, dat_z2)
 names(dat_z_merge)
 
 # remove the 7 articles that were not eligible
-
-dat_z_reduced <- subset(dat_z_merge, Key != c("PP943BLA", "9FDT5HPG", "VBVMN323", "FYCXAAIM",
-                                                "HFB9KKL4", "C7Y99I4H", "D7CLHN8V"))
-
 
 dat_z_reduced <- dat_z_merge %>% filter(Key != "PP943BLA" 
                                         & Key != "9FDT5HPG"
@@ -266,14 +261,14 @@ dat_z_reduced <- dat_z_merge %>% filter(Key != "PP943BLA"
                         
 # write this one out, it is actual final full record
 
-# write.csv(dat_z_reduced, "Exploratory-Prereg_Lifecycle_RR_Data_Full_Records_2026-08-04.csv", row.names = FALSE)
+# write.csv(dat_z_reduced, "./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Data_Full_Records_2026-08-04.csv", row.names = FALSE)
 
 #############################################
 #### Final Data Set ####
 
 # read in coded data
 
-dat_coded <- readxl::read_xlsx("Exploratory-Prereg_Lifecycle_RR_Coding.xlsx")
+dat_coded <- readxl::read_xlsx("./Data/Intermediate/Exploratory-Prereg_Lifecycle_RR_Coding.xlsx")
 
 # get rid of the 7 not eligible
 
@@ -288,6 +283,7 @@ dat_coded_reduced <- dat_coded %>% filter(Key != "PP943BLA"
 # join the full record with the coded data
 
 # first simplify coded data file
+
 names(dat_coded_reduced)
 
 dat_coded_reduced <- dat_coded_reduced %>% select(Key, title_rel:notes)
@@ -338,13 +334,13 @@ dat_analysis %>% group_by(explore_bin) %>% summarise(mean = mean(explore_count))
 
 # and actually now recode back to yes/no
 
-dat_analysis <- dat_joined_reduced %>% 
+dat_analysis <- dat_analysis %>% 
   mutate(across(c(title:discussion), ~ case_match(.x, 
                                                   1 ~ "yes", 
                                                   0  ~ "no")))
 # write this out, final analysis file!
 
-write.csv(dat_analysis, "Exploratory-Prereg_Lifecycle_RR_Data_Analysis_2026-08-04.csv", row.names = FALSE)
+# write.csv(dat_analysis, "./Data/Exploratory-Prereg_Lifecycle_RR_Data_Analysis_2026-08-04.csv", row.names = FALSE)
 
 ###############################################
 ##############################################
@@ -354,7 +350,7 @@ write.csv(dat_analysis, "Exploratory-Prereg_Lifecycle_RR_Data_Analysis_2026-08-0
 
 # read in the articles that were matched
 
-dat_gen <- read.csv("../Data/Generalizability/Exploratory-Prereg_Lifecycle_RR_Zotero-Export_Gen-Matched_2026-08-19.csv")
+dat_gen <- read.csv("./Data/Generalizability/Exploratory-Prereg_Lifecycle_RR_Zotero-Export_Gen-Matched_2026-08-19.csv")
 names(dat_gen)
 
 dat_gen <- dat_gen[,c(1, 3:6, 9, 10, 23, 40)]
@@ -392,7 +388,7 @@ names(dat_gen)
 
 # save this out for coding
 
-# write.csv(dat_gen, "../Data/Generalizability/Exploratory-Prereg_Lifecycle_Gen_Coding.csv", row.names = FALSE)
+# write.csv(dat_gen, "./Data/Generalizability/Exploratory-Prereg_Lifecycle_Gen_Coding.csv", row.names = FALSE)
 
 
 
