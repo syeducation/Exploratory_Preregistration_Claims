@@ -33,7 +33,7 @@ set.seed(1978)
 #############################################
 #### Data import ####
 
-dat <- read.csv("../Data/Exploratory-Prereg_Lifecycle_RR_Data_Analysis_2026-08-04.csv")
+dat <- read.csv("./Data/Exploratory-Prereg_Lifecycle_RR_Data_Analysis_2026-08-04.csv")
 
 names(dat)
 
@@ -81,7 +81,7 @@ table_journal <- dat %>% filter(type_article == "Registered Report") %>% freq(jo
 table_journal <- as_tibble(table_journal, rownames = "journal")
 table_journal
 
-write.csv(table_journal, "../Tables/Raw/table_journal_freqs.csv", row.names = FALSE)
+write.csv(table_journal, "./Tables/Raw/table_journal_freqs.csv", row.names = FALSE)
 
 # any presence by articles type
 
@@ -358,7 +358,7 @@ plot_b <- ggplot(dat, aes(x = type_article, fill = explore_bin)) +
   theme(legend.title = element_blank())
 plot_b
 
-ggsave("../Figures/figure_binary_any.png", plot_b)
+ggsave("./Figures/figure_binary_any.png", plot_b)
 
 #### doing a binary plot for each section, then will create multipanel
 
@@ -452,7 +452,7 @@ figure_bins <- plot_grid(plot_a, plot_i, plot_m, plot_r, plot_d, plot_h,
                          labels = LETTERS[1:6])
 figure_bins
 
-ggsave("../Figures/figure_binary_multi.png", figure_bins)
+ggsave("./Figures/figure_binary_multi.png", figure_bins)
 
 #### count measure across article types
 
@@ -465,7 +465,7 @@ plot_c <-  ggplot(dat, aes(x = type_article, y = explore_count)) +
   theme_bw()
 plot_c
 
-ggsave("../Figures/figure_count.png", plot_c)
+ggsave("./Figures/figure_count.png", plot_c)
 
 
 
@@ -554,7 +554,7 @@ plot_change_all <- plot_grid(plot_change_2010, plot_change_trad, plot_change_pr,
                              labels = LETTERS[1:4])
 plot_change_all
 
-ggsave("../Figures/figure_change_all.png", plot_change_all)
+ggsave("./Figures/figure_change_all.png", plot_change_all)
 
 
 plot_change_count <- ggplot(dat_change, aes(x = year, y = explore_count, 
@@ -570,7 +570,7 @@ plot_change_count <- ggplot(dat_change, aes(x = year, y = explore_count,
   theme(legend.position = "bottom")
 plot_change_count
 
-ggsave("../Figures/figure_change_count.png", plot_change_count)
+ggsave("./Figures/figure_change_count.png", plot_change_count)
 
 #### Comparison of journals that publish a lot of RRs ####
 
@@ -643,12 +643,12 @@ figure_journals <- plot_grid(plot_cortex, plot_nhb, plot_jesp, plot_oth,
                          labels = LETTERS[1:4])
 figure_journals
 
-ggsave("../Figures/figure_journal_comparison.png", figure_journals)
+ggsave("./Figures/figure_journal_comparison.png", figure_journals)
 
 
 #### Examination of Journal Policies ####
 
-dat_policies <- read.csv("../Data/Exploratory-Prereg_Lifecycle_Journal-Policies.csv")
+dat_policies <- read.csv("./Data/Policies/Exploratory-Prereg_Lifecycle_Journal-Policies.csv")
 names(dat_policies)
 
 # rename columns for clarity
@@ -784,14 +784,14 @@ figure_policies <- plot_grid(plot_req_all, plot_req_two, plot_req_one, plot_req_
                              labels = LETTERS[1:4])
 figure_policies
 
-ggsave("../Figures/figure_policies_comparison.png", figure_policies)
+ggsave("./Figures/figure_policies_comparison.png", figure_policies)
 
 
 #### generalizability test: comparing trad articles from journals that publish RR and those that don't  ####
 
 # load data with the previously coded generalizability sample of new articles (N = 30)
 
-dat_gen_1 <- readxl::read_xlsx("../Data/Generalizability/Exploratory-Prereg_Lifecycle_Gen_Coding.xlsx")
+dat_gen_1 <- readxl::read_xlsx("./Data/Generalizability/Exploratory-Prereg_Lifecycle_Gen_Coding.xlsx")
 names(dat_gen_1)
 
 # create count variable 
@@ -817,7 +817,7 @@ dat_gen_1_analysis %>% group_by(explore_bin) %>% summarise(mean = mean(explore_c
 
 # load data from primary that they were matched to
 
-dat_gen_2 <- read.csv("../Data/Generalizability/Exploratory-Prereg_Lifecycle_RR_Zotero-Export_Gen-For-Matching_2026-08-19.csv")
+dat_gen_2 <- read.csv("./Data/Generalizability/Exploratory-Prereg_Lifecycle_RR_Zotero-Export_Gen-For-Matching_2026-08-19.csv")
 names(dat_gen_2)
 
 # just keep the key, index and add indicator
