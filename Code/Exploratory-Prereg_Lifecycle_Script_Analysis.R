@@ -2,7 +2,7 @@
 #### Exploratory Prereg Project ####
 # Analysis Script
 # Created on August 10, 2026, by Moin Syed
-# Checked on DATE, by NAME
+# Checked on August 31, by Caroline Armstrong
 #############################################
 
 #### Workspace setup ####
@@ -34,6 +34,7 @@ set.seed(1978)
 #### Data import ####
 
 dat <- read.csv("../Data/Exploratory-Prereg_Lifecycle_RR_Data_Analysis_2026-08-04.csv")
+
 names(dat)
 
 # need a numeric indicator of journal for the clustered comparison of means 
@@ -334,71 +335,6 @@ p_values
 
 p.adjust(p_values, method = "BH")
 
-
-
-#############################################
-#### Exploratory - Traditional Match to Traditional 2010 ####
-
-#### Test 1 - binary
-
-dat_exp <- dat %>% filter(type_article == "Traditional Match" |
-                            type_article == "Traditional 2010")
-table(dat_exp$type_article)
-
-# main test, clustered by journal
-
-texp <- chisqtestClust(dat_exp$type_article, dat_exp$explore_bin, dat_exp$journal)
-texp
-
-# robust 1: no clustering
-
-chisq.test(dat_exp$type_article, dat_exp$explore_bin)
-
-# robust 2: cluster by matching
-
-chisqtestClust(dat_exp$type_article, dat_exp$explore_bin, dat_exp$index)
-
-# distribution by binary total and for each section
-
-ctable(dat_exp$type_article, dat_exp$explore_bin)
-
-ctable(dat_exp$type_article, dat_exp$title)
-ctable(dat_exp$type_article, dat_exp$abstract)
-ctable(dat_exp$type_article, dat_exp$intro)
-ctable(dat_exp$type_article, dat_exp$method)
-ctable(dat_exp$type_article, dat_exp$results)
-ctable(dat_exp$type_article, dat_exp$discussion)
-ctable(dat_exp$type_article, dat_exp$heading)
-
-#### Test 2 - count
-
-# main test, clustered by journal
-# same error message
-
-ttestClust(explore_count ~ type_article, id = journal, data = dat_exp)
-
-# robust 1: no clustering
-
-t.test(explore_count ~ type_article, data = dat_exp)
-
-# robust 2: cluster by matching
-
-ttestClust(explore_count ~ type_article, id = index, data = dat_exp)
-
-#### Test 2 - heading
-
-# main test, clustered by journal
-
-chisqtestClust(dat_exp$type_article, dat_exp$heading, dat_exp$journal)
-
-# robust 1: no clustering
-
-chisq.test(dat_exp$type_article, dat_exp$heading)
-
-# robust 2: cluster by matching
-
-chisqtestClust(dat_exp$type_article, dat_exp$heading, dat_exp$index)
-
 #############################################
 #### Plots ####
 
@@ -416,7 +352,7 @@ plot_b <- ggplot(dat, aes(x = type_article, fill = explore_bin)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research: Anywhere in Article",
-       x = "Article Type", y = "Percent") +
+       x = "Article Type", y = "Proportion") +
   scale_x_discrete(labels = c("Traditional 2010", "Traditional", "Preregistered", "Registered Report")) +
   theme_bw() +
   theme(legend.title = element_blank())
@@ -432,8 +368,8 @@ plot_t <- ggplot(dat, aes(x = type_article, fill = title)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research: \nTitle",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_t
@@ -444,8 +380,8 @@ plot_a <- ggplot(dat, aes(x = type_article, fill = abstract)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research: \nAbstract",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_a
@@ -456,8 +392,8 @@ plot_i <- ggplot(dat, aes(x = type_article, fill = intro)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research: \nIntroduction",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_i
@@ -468,8 +404,8 @@ plot_m <- ggplot(dat, aes(x = type_article, fill = method)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research: \nMethod",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_m
@@ -480,8 +416,8 @@ plot_r <- ggplot(dat, aes(x = type_article, fill = results)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research: \nResults",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_r
@@ -492,8 +428,8 @@ plot_d <- ggplot(dat, aes(x = type_article, fill = discussion)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research: \nDiscussion",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_d
@@ -504,8 +440,8 @@ plot_h <- ggplot(dat, aes(x = type_article, fill = heading)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Headers Indicating \nExploratory Research",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_h
@@ -536,7 +472,30 @@ ggsave("../Figures/figure_count.png", plot_c)
 ################################################
 #### Exploratory Analyses ####
 
-#### Change over time for all articles
+#### Traditional Match to Traditional 2010 ####
+
+dat_exp <- dat %>% filter(type_article == "Traditional Match" |
+                            type_article == "Traditional 2010")
+table(dat_exp$type_article)
+
+# distribution by binary total and for each section
+
+ctable(dat_exp$type_article, dat_exp$explore_bin)
+
+ctable(dat_exp$type_article, dat_exp$title)
+ctable(dat_exp$type_article, dat_exp$abstract)
+ctable(dat_exp$type_article, dat_exp$intro)
+ctable(dat_exp$type_article, dat_exp$method)
+ctable(dat_exp$type_article, dat_exp$results)
+ctable(dat_exp$type_article, dat_exp$discussion)
+ctable(dat_exp$type_article, dat_exp$heading)
+
+# count
+
+dat_exp %>% filter(type_article == "Traditional 2010") %>%  descr(explore_count)
+dat_exp %>% filter(type_article == "Traditional Match") %>%  descr(explore_count)
+
+#### Change over time for all articles ####
 
 # exclude 2010 articles
 
@@ -557,7 +516,7 @@ plot_change_2010 <- dat %>% filter(type_article == "Traditional 2010") %>%
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Change Over Time in Presence of Exploratory Research: \nTraditional Articles 2010",
-       x = "2010", y = "Percent") +
+       x = "2010", y = "Proportion") +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_change_2010
@@ -567,7 +526,7 @@ plot_change_trad <- dat_change %>% filter(type_article == "Traditional Match") %
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Change Over Time in Presence of Exploratory Research: \nTraditional Articles",
-       x = "Publication Year", y = "Percent") +
+       x = "Publication Year", y = "Proportion") +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_change_trad
@@ -577,7 +536,7 @@ plot_change_pr <- dat_change %>% filter(type_article == "Preregistered Match") %
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Change Over Time in Presence of Exploratory Research: \nPreregistered Articles",
-       x = "Publication Year", y = "Percent") +  theme_bw() +
+       x = "Publication Year", y = "Proportion") +  theme_bw() +
   theme(legend.title = element_blank())
 plot_change_pr
 
@@ -586,7 +545,7 @@ plot_change_rr <- dat_change %>% filter(type_article == "Registered Report") %>%
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Change Over Time in Presence of Exploratory Research: \nRegistered Reports",
-       x = "Publication Year", y = "Percent") +
+       x = "Publication Year", y = "Proportion") +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_change_rr
@@ -613,9 +572,9 @@ plot_change_count
 
 ggsave("../Figures/figure_change_count.png", plot_change_count)
 
-## Comparison of journals that publish a lot of RRs
+#### Comparison of journals that publish a lot of RRs ####
 
-# frequencies by journal (piping not working...)
+# frequencies by journal (pipe not working here, so code is clunkier....still works)
 
 dat_cortext <- dat %>% filter(journal == "Cortex")
 ctable(dat_cortext$type_article, dat_cortext$explore_bin)
@@ -626,41 +585,46 @@ ctable(dat_nhb$type_article, dat_nhb$explore_bin)
 dat_jesp <- dat %>% filter(journal == "Journal of Experimental Social Psychology")
 ctable(dat_jesp$type_article, dat_jesp$explore_bin)
 
-
-# binary cortex
+# binary presence for the journal cortex
 
 plot_cortex <- dat %>% filter(journal == "Cortex") %>%  
   ggplot(aes(x = type_article, fill = explore_bin)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research:\nCortex",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_cortex
+
+# binary presence for the journal nature human behavior
 
 plot_nhb <- dat %>% filter(journal == "Nature Human Behaviour") %>%  
   ggplot(aes(x = type_article, fill = explore_bin)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research:\nNature Human Behaviour",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_nhb
+
+# binary presence for the journal of experimental social psychology
 
 plot_jesp <- dat %>% filter(journal == "Journal of Experimental Social Psychology") %>%  
   ggplot(aes(x = type_article, fill = explore_bin)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research:\nJournal of Experimental Social Psychology",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_jesp
+
+# binary presence for the all other journals
 
 plot_oth <- dat %>% filter(journal != "Journal of Experimental Social Psychology" &
                            journal != "Nature Human Behaviour" & 
@@ -669,8 +633,8 @@ plot_oth <- dat %>% filter(journal != "Journal of Experimental Social Psychology
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research:\nOther Journals",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_oth
@@ -682,7 +646,7 @@ figure_journals
 ggsave("../Figures/figure_journal_comparison.png", figure_journals)
 
 
-## Examination of Journal Policies
+#### Examination of Journal Policies ####
 
 dat_policies <- read.csv("../Data/Exploratory-Prereg_Lifecycle_Journal-Policies.csv")
 names(dat_policies)
@@ -777,8 +741,8 @@ plot_req_all <- dat_policies_merged %>% filter(required == 3) %>%
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research:\nDistinctions Required for All Articles (n = 16, k =2)",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_req_all
@@ -788,8 +752,8 @@ plot_req_two <- dat_policies_merged %>% filter(required == 2) %>%
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research:\nDistinctions Required for Registered Articles (n = 32, k = 4)",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_req_two
@@ -799,8 +763,8 @@ plot_req_one <- dat_policies_merged %>% filter(required == 1) %>%
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research:\nDistinctions Required for Registered Reports Only (n = 238, k = 14)",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_req_one
@@ -810,8 +774,8 @@ plot_req_none <- dat_policies_merged %>% filter(required == 0) %>%
   geom_bar(position = "fill") +
   scale_fill_manual(values = c("#c1272d", "#00859A"), labels = c("No", "Yes")) +
   labs(title = "Presence of Exploratory Research:\nNo Required Distinctions (n = 96, k = 10)",
-       x = "Article Type", y = "Percent") +
-  scale_x_discrete(labels = c("TR 2010", "TR", "PR", "RR")) +
+       x = "Article Type", y = "Proportion") +
+  scale_x_discrete(labels = c("TA 2010", "TA", "PR", "RR")) +
   theme_bw() +
   theme(legend.title = element_blank())
 plot_req_none
@@ -823,9 +787,9 @@ figure_policies
 ggsave("../Figures/figure_policies_comparison.png", figure_policies)
 
 
-## generalizability test: comparing trad articles from journals that publish RR and those that don't
+#### generalizability test: comparing trad articles from journals that publish RR and those that don't  ####
 
-# load data with coded gen sample
+# load data with the previously coded generalizability sample of new articles (N = 30)
 
 dat_gen_1 <- readxl::read_xlsx("../Data/Generalizability/Exploratory-Prereg_Lifecycle_Gen_Coding.xlsx")
 names(dat_gen_1)

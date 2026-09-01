@@ -1,0 +1,21 @@
+variable,label,value_labels,scale,type
+Key,Article ID Number,NA,NA,character
+year,Year of Article Publication,NA,NA,numeric
+author,Article Author List,NA,NA,character
+title_article,Article Title,NA,NA,character
+journal,Journal Article Published In,NA,NA,character
+doi,Article DOI,NA,NA,character
+url,Article URL,NA,NA,character
+index,Indicator for Article Matches Across Article Types,NA,NA,numeric
+type_article,Article Type,Traditional 201; Traditional Match; Preregistered Match; Registered Report,NA,factor
+title,Presence of Exploratory Research in Title,no; yes,Prominence,factor
+abstract,Presence of Exploratory Research in Abstract,no; yes,Prominence,factor
+intro,Presence of Exploratory Research in Introduction,no; yes,Prominence,factor
+method,Presence of Exploratory Research in Method,no; yes,Prominence,factor
+results,Presence of Exploratory Research in Results,no; yes,Prominence,factor
+discussion,Presence of Exploratory Research in Discussion,no; yes,Prominence,factor
+heading,Section Header for Exploratory Research,no; yes,NA,factor
+difficulty,Global Difficulty for Coding the Article,very_easy; somewhat_easy; somewhat_difficult; very_difficult,NA,factor
+notes,Any Notes on the Coding Process,NA,NA,character
+explore_count,"Prominence Measure, summed across the six sections",NA,NA,numeric
+explore_bin,"Presence Measure, any mention across the six sections",no; yes,NA,factor

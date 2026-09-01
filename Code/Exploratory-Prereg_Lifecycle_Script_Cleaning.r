@@ -2,7 +2,7 @@
 #### Exploratory Prereg Project ####
 # Cleaning Script
 # Created on July 30, 2026, by Moin Syed
-# Checked on DATE, by NAME
+# Checked on August 31, by Caroline Armstrong
 #############################################
 
 #### Workspace setup ####
@@ -10,7 +10,7 @@
 
 library(dplyr)
 library(tidyr)
-library(summarytools)
+library(summarytools) # if using mac, requires install of xquartz (easy)
 library(stringr)
 
 sessionInfo()
@@ -78,7 +78,7 @@ dat_included$journal <- str_to_title(dat_included$journal)
 
 freq(dat_included$journal)
 
-# remove AMPPS (n = 6) because matches are not really possible
+# remove AMPPS (n = 6) because matches are not really possible given that it is a methods journal
 
 dat_included <- dat_included %>% filter(
   journal != "Advances In Methods And Practices In Psychological Science")
@@ -102,9 +102,13 @@ names(dat_final)
 
 # write.csv(dat_final, "Exploratory-Prereg_Lifecycle_RR_Data.csv", row.names = FALSE)
 
+# random sampling was supposed to be reproducible
 # looks like something got messed up and the random sampling is not reproducible!
 # not sure what went wrong there, but this was discovered after all the matches were identified
-# so we will just have to go with it
+# so it goes
+
+# n = 8 articles were found ineligible after sampling for various reasons
+# need to remove those 8 and resample from the 82 not selected in initial round
 
 # reading back in the data file so that I can resample from those not included
 
@@ -153,6 +157,8 @@ names(dat_extra)
 dat_extra <- dat_extra[,c(1, 9, 2:8, 10)]
 names(dat_extra)
 
+# not writing this out because it may not be reproducible
+# instead reas in resultant file in next section
 # write.csv(dat_extra, "Exploratory-Prereg_Lifecycle_RR_Selection-2_Data.csv", row.names = FALSE)
 
 #############################################
@@ -196,6 +202,7 @@ dat_reliability <- dat_reliability %>% mutate(title_rel = NA,
 names(dat_reliability)
 head(dat_reliability)
 
+# again, not writing out because of uncertainities of reproducibility 
 # write.csv(dat_reliability, "Exploratory-Prereg_Lifecycle_RR_Reliability.csv", row.names = FALSE)
 
 #############################################

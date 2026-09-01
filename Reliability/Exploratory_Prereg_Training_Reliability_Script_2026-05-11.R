@@ -2,7 +2,7 @@
 #### Exploratory Prereg Project ####
 # Reliability Script
 # Created on May 11, 2026, by Moin Syed
-# Checked on DATE, by NAME
+# Checked on August 31, by Caroline Armstrong
 #############################################
 
 #### Workspace setup ####
@@ -28,7 +28,8 @@ set.seed(1978)
 
 #### Data import ####
 
-# read in each rater's data, select only ID and ratings (plus phase on first one)
+# read in each rater's data, select only ID and ratings 
+# include the phase variables for the first file only
 
 dat_m <- read_xlsx("Exploratory_Prereg_Training_Coding_MS.xlsx")
 names(dat_m)
@@ -121,7 +122,7 @@ dat <- dat %>% filter(phase == 3)
 
 #### Reliability Analysis - Training Phase ####
 
-# loops to calculate average pairwise agreeement and kappa
+# loops to calculate average pairwise agreement and kappa
 
 # title
 
@@ -393,7 +394,9 @@ dat_amf <- left_join(dat_af, dat_mf, by = "Key")
 
 names(dat_amf)
 
-# filter for only the batch of interest, if necessary 
+# reliability ratings were done in batches
+# filter for only the batch of interest, if needed
+# if looking at all data, keep the below commented out
 
 # dat_amf <- dat_amf %>% filter(Batch == 1)
 
@@ -426,5 +429,14 @@ kappa2(rel_discussion)
 agree(rel_heading)
 kappa2(rel_heading)
 
+c(agree_title$value, agree_abstract$value, agree_intro$value,
+  agree_method$value, agree_results$value, agree_discussion$value,
+  agree_heading$value)
+
 # percent agreement range from 89-100%
+
+c(kappa_title$value, kappa_abstract$value, kappa_intro$value,
+  kappa_method$value, kappa_results$value, kappa_discussion$value,
+  kappa_heading$value)
+
 # kappa range from .41 (intro) to 1.0. Other than intro, range is .74-1.0
